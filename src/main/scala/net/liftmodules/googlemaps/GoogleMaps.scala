@@ -23,7 +23,7 @@ import net.liftweb.http.{ LiftRules, S }
 /**
  * Usage:
  * <span class="lift:YOURSNIPPET.markers"></span> or your javascript
- * <div class="lift:GoogleMaps.map?w=512;h=384"></div>
+ * 
  * 
  * <div class="lift:GoogleMaps.mapJs"></div>
  *
@@ -35,11 +35,12 @@ class GoogleMaps {
 
   val mapId = "map_canvas"
 
-  private val x = """<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script><script type="text/javascript" src="%s"></script> """.format(jsPath)
+  private val scriptTags = """<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script><script type="text/javascript" src="%s"></script> """.format(jsPath)
      
  
-  def mapJs = <head_merge>{Unparsed(x)}</head_merge>
+  def mapJs = <head_merge>{Unparsed(scriptTags)}</head_merge>
 
+  //We only support pixels at the moment. 
   def map = {
     val w = S.attr("w").map(a ⇒ a.toInt).openOr(341)
     val h = S.attr("h").map(a ⇒ a.toInt).openOr(256)
@@ -50,3 +51,4 @@ class GoogleMaps {
 
 }
 
+ 
