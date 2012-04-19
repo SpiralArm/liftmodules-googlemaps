@@ -1,19 +1,9 @@
-/**
-   Expect: 
-   1. variable mapId defining the map element Id.
-   2. array of marker objects 
-   3. callback function for mouse up if a marker is dragged. 
-   4. boolean variable defining if markers should be draggable or not.
-
-*/
-   function loadMap() {
+function loadMap() {
    
-   var myOptions = {
-      zoom : 16,
-      mapTypeId : google.maps.MapTypeId.ROADMAP
-   };
+   var myOptions = {center: new google.maps.LatLng(markers[0].lat,markers[0].lng),zoom : 16,mapTypeId : google.maps.MapTypeId.ROADMAP};
 
-   console.log("map id ", mapId)
+   console.log("map id ", mapId);
+   
    var map = new google.maps.Map(document.getElementById(mapId), myOptions);
    
    for (i = 0; i < markers.length; i++) {
@@ -26,8 +16,5 @@
    }
 
 }
-
+console.log("call loadMap");
 $(window).load(function(){ loadMap();});
-
-
-      
