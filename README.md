@@ -1,6 +1,6 @@
-# MODULE_NAME Lift Module
+# google maps Lift Module
 
-WHAT IT DOES
+Starting point for adding a google map with markers. 
 
 ## Using this module
 
@@ -24,3 +24,9 @@ WHAT IT DOES
 
 4. OTHER_STUFF
 
+
+
+
+TODO 
+
+1. find out how to wrapper JS so we don't pollute the global name space. Perhaps look at lift.ajax or something similar 
