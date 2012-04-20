@@ -16,11 +16,11 @@ Starting point for adding a google map with markers.
 
 2. Include this dependency:
 
-         "net.liftmodules" %% "MODULE_NAME" % (liftVersion+"VERSION")
+         "net.liftmodules" %% "google-maps" % (liftVersion+"-0.10")    
 
 3. In your application's Boot.boot code:
 
-          bootstrap.liftmodules.MODULE_NAME.init
+          bootstrap.liftmodules.googlemaps.init
 
 4. OTHER_STUFF
 
