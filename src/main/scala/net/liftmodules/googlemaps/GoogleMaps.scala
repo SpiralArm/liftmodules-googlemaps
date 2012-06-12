@@ -17,37 +17,49 @@ package net.liftmodules.googlemaps
 package snippet
 
 import scala.xml._
-
 import net.liftweb.http.{ LiftRules, S }
+import net.liftweb.common.Loggable
 
 /**
  * Usage:
- * <span class="lift:YOURSNIPPET.markers"></span> or your javascript
+ * <div  id="mapCanvas" class="lift:GoogleMaps.map?w=512&h=512&z=17&d=true"></div>
  * 
- * 
- * <div class="lift:GoogleMaps.mapJs"></div>
- *
+ * default lat/lng are taken from elements within the page with the id lat and lng.
  *
  */
-class GoogleMaps {
+class GoogleMaps extends Loggable {
 
-  private val jsPath = "%s/%s/js/maps.js".format(S.contextPath, LiftRules.resourceServerPath)
+  
 
-  val mapId = "map_canvas"
-
-  private val scriptTags = """<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script><script type="text/javascript" src="%s"></script> """.format(jsPath)
+  private def scriptTags(zoomLevel:Int,draggable:Boolean) = """<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script>
+<script type="text/javascript">
+  function loadMap() {
+   var dlat = $("#lat").val();
+   var dlng = $("#lng").val();
+   var markers = [{"lat":dlat,"lng":dlng}];    
+   var myOptions = {center: new google.maps.LatLng(dlat,dlng),zoom :%s,mapTypeId : google.maps.MapTypeId.ROADMAP};
+   var map = new google.maps.Map(document.getElementById(mapId), myOptions);
+   for (i = 0; i < markers.length; i++) {
+      var marker = new google.maps.Marker({map: map,draggable:%s,position:new google.maps.LatLng(dlat,dlng) });
+      google.maps.event.addListener(marker, 'mouseup', function() { markerCallback(marker);});
+   }
+}
+$(window).load(function(){ loadMap();});
+</script> """.format(zoomLevel,draggable)
      
- 
-  def mapJs = <head_merge>{Unparsed(scriptTags)}</head_merge>
 
   //We only support pixels at the moment. 
   def map = {
-    val w = S.attr("w").map(a ⇒ a.toInt).openOr(341)
-    val h = S.attr("h").map(a ⇒ a.toInt).openOr(256)
-    val style = "width:%spx; height:%spx;".format(w, h)
-
-    <div id={ mapId } style={ style }></div>
-  }
+     val mapId = "map_canvas"    
+     val zoomLevel   = S.attr("z").map(a ⇒ a.toInt).openOr(17)
+     val draggable   = S.attr("d").map(a ⇒ a.toBoolean).openOr(true)
+     val width  = S.attr("w").map(a ⇒ a.toInt).openOr(341)
+     val height = S.attr("h").map(a ⇒ a.toInt).openOr(256)
+     <head_merge>{Unparsed(scriptTags(zoomLevel,draggable))}</head_merge>     
+     <div id={ mapId } style={ "width:%spx; height:%spx;".format(width, height) }></div>  
+  } 
+  
+  
 
 }
 
