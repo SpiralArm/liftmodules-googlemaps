@@ -1,6 +1,6 @@
 name := "google-maps"
 
-version := "2.5-SNAPSHOT-0.11"
+version := "2.5-SNAPSHOT-0.12"
 
 organization := "net.liftmodules"
  
@@ -13,17 +13,11 @@ resolvers += "snapshots" at "https://oss.sonatype.org/content/repositories/snaps
 
 libraryDependencies ++= {
   val liftVersion = "2.5-SNAPSHOT" 
-  Seq(
-    "net.liftweb" %% "lift-webkit" % liftVersion % "compile->default")
+  Seq("net.liftweb" %% "lift-webkit" % liftVersion % "compile->default")
 }
 
 // Customize any further dependencies as desired
-libraryDependencies ++= Seq(
-  "org.scala-tools.testing" % "specs_2.9.0" % "1.6.8" % "test", // For specs.org tests
-  "junit" % "junit" % "4.8" % "test->default", // For JUnit 4 testing
-  "javax.servlet" % "servlet-api" % "2.5" % "provided->default",
-  "ch.qos.logback" % "logback-classic" % "0.9.26" % "compile->default" // Logging
-)
+libraryDependencies ++= Seq( "javax.servlet" % "servlet-api" % "2.5" % "provided->default" )
 
  // To publish to the Cloudbees repos:
 

@@ -15,20 +15,12 @@
 */
 package bootstrap.liftmodules
 
-import net.liftweb.util.Props
-import net.liftweb.http._
+import net.liftweb.http.LiftRulesMocker.toLiftRules
+import net.liftweb.http.LiftRules
 
-/*
-  If you need to configure your module before use, rename and do it here, otherwise delete.!
-
- */
+/* */
 object GoogleMaps {
 
-  def init {
-    LiftRules.addToPackages("net.liftmodules.googlemaps")
-
-    ResourceServer.allow({ case "js" :: "maps.js" :: Nil ⇒ true })
-
-  }
+  def init { LiftRules.addToPackages("net.liftmodules.googlemaps") }
 
 }

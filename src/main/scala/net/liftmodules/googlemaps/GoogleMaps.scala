@@ -31,7 +31,7 @@ class GoogleMaps extends Loggable {
 
   
 
-  private def scriptTags(zoomLevel:Int,draggable:Boolean) = """<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script>
+  private def scriptTags(zoomLevel:Int,draggable:Boolean) = """<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script>
 <script type="text/javascript">
   function loadMap() {
    var dlat = $("#lat").val();
