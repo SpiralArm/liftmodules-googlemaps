@@ -31,7 +31,7 @@ class GoogleMaps extends Loggable {
 
   
 
-  private def scriptTags(zoomLevel:Int,draggable:Boolean) = """<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script>
+  private def scriptTags(zoomLevel:Int,draggable:Boolean,scheme:String) = """<script type="text/javascript" src="%s://maps.googleapis.com/maps/api/js?v=3.4&sensor=false&language=en"></script>
 <script type="text/javascript">
   function loadMap() {
    var dlat = $("#lat").val();
@@ -45,7 +45,7 @@ class GoogleMaps extends Loggable {
    }
 }
 $(window).load(function(){ loadMap();});
-</script> """.format(zoomLevel,draggable)
+</script> """.format(scheme,zoomLevel,draggable)
      
 
   //We only support pixels at the moment. 
@@ -55,7 +55,7 @@ $(window).load(function(){ loadMap();});
      val draggable   = S.attr("d").map(a ⇒ a.toBoolean).openOr(true)
      val width  = S.attr("w").map(a ⇒ a.toInt).openOr(341)
      val height = S.attr("h").map(a ⇒ a.toInt).openOr(256)
-     <head_merge>{Unparsed(scriptTags(zoomLevel,draggable))}</head_merge>     
+     <head_merge>{Unparsed(scriptTags(zoomLevel,draggable,S.request.map{_.request.scheme}.openOr("https")))}</head_merge>     
      <div id={ mapId } style={ "width:%spx; height:%spx;".format(width, height) }></div>  
   } 
   

@@ -1,6 +1,6 @@
 name := "google-maps"
 
-version := "2.5-SNAPSHOT-0.12"
+version := "2.5-SNAPSHOT-0.13"
 
 organization := "net.liftmodules"
  
