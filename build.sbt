@@ -1,12 +1,16 @@
 name := "google-maps"
 
+organization := "net.liftmodules"
+
+version := "0.13-SNAPSHOT"
+
 liftVersion <<= liftVersion ?? "2.5-SNAPSHOT"
 
-version <<= liftVersion apply { _ + "-0.13-SNAPSHOT" }
+liftEdition <<= liftVersion apply { _.substring(0,3) }
 
-organization := "net.liftmodules"
- 
-scalaVersion := "2.10.0" 
+name <<= (name, liftEdition) { (n, e) =>  n + "_" + e }
+
+scalaVersion := "2.10.0"
 
 crossScalaVersions := Seq("2.10.0", "2.9.1","2.9.2")
 
@@ -19,7 +23,7 @@ resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
 resolvers += "snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
 libraryDependencies <++= liftVersion { v =>
-  Seq("net.liftweb" %% "lift-webkit"  % v % "compile->default" )
+  Seq("net.liftweb" %% "lift-webkit"  % v % "provided" )
 }
 
 // Customize any further dependencies as desired
@@ -29,7 +33,7 @@ publishTo <<= version { _.endsWith("SNAPSHOT") match {
         case true  => Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
         case false => Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
   }
- } 
+ }
 
 // For local deployment:
 
@@ -69,5 +73,5 @@ pomExtra := (
               <name>Jonathan Ferguson</name>
               <url>https://github.com/jonoabroad</url>
             </developer>
-         </developers> 
+         </developers>
  )
